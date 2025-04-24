@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать заказ</title>
+</head>
+<body>
+<h1>Редактирование заказа</h1>
+
+<form th:action="@{/orders/save}" th:object="${order}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div>
+        <label>Имя клиента:</label>
+        <input type="text" th:field="*{customerName}" required>
+    </div>
+    <div>
+        <label>Товар:</label>
+        <select th:field="*{product.id}" required>
+            <option value="">-- Выберите товар --</option>
+            <option th:each="product : ${allProducts}"
+                    th:value="${product.id}"
+                    th:text="${product.name}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label>Телефон:</label>
+        <input type="text" th:field="*{customerPhone}">
+    </div>
+    <div>
+        <label>Адрес:</label>
+        <input type="text" th:field="*{customerAddress}">
+    </div>
+    <button type="submit">Обновить</button>
+    <a th:href="@{/orders}">Отмена</a>
+</form>
+</body>
+</html>

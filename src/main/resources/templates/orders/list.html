@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Список заказов</h1>
+
+<!-- Форма поиска -->
+<form th:action="@{/orders/search}" method="get">
+    <div>
+        <label>Имя клиента:</label>
+        <input type="text" name="customerName" th:value="${param.customerName}">
+    </div>
+    <div>
+        <label>Дата от:</label>
+        <input type="date" name="startDate" th:value="${param.startDate}">
+    </div>
+    <div>
+        <label>Дата до:</label>
+        <input type="date" name="endDate" th:value="${param.endDate}">
+    </div>
+    <button type="submit">Поиск</button>
+    <a th:href="@{/orders}">Сбросить</a>
+</form>
+
+<div th:if="${error}" class="error" th:text="${error}"></div>
+
+<a th:href="@{/orders/new}">Создать новый заказ</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Клиент</th>
+        <th>Товар</th>
+        <th>Дата заказа</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}" th:if="${orders != null and !orders.empty}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.customerName}"></td>
+        <td th:text="${order.product != null ? order.product.name : 'Нет данных'}"></td>
+        <td th:text="${#dates.format(order.orderDate, 'dd.MM.yyyy')}"></td>
+        <td>
+            <a th:href="@{/orders/edit/{id}(id=${order.id})}">Редактировать</a>
+            <a th:href="@{/orders/delete/{id}(id=${order.id})}"
+               onclick="return confirm('Удалить этот заказ?')">Удалить</a>
+        </td>
+    </tr>
+    <tr th:if="${orders == null or orders.empty}">
+        <td colspan="5">Нет данных о заказах</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

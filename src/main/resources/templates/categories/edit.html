@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать категорию</title>
+</head>
+<body>
+<h1>Редактирование категории</h1>
+
+<form th:action="@{/categories/save}" th:object="${category}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div>
+        <label>Название:</label>
+        <input type="text" th:field="*{name}" required>
+    </div>
+    <button type="submit">Обновить</button>
+    <a th:href="@{/categories}">Отмена</a>
+</form>
+</body>
+</html>

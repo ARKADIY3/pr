@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <meta charset="UTF-8">
     <title>Редактировать категорию</title>
+
 </head>
 <body>
-<h1>Редактирование категории</h1>
+<h1>Редактировать категорию</h1>
 
 <form th:action="@{/categories/save}" th:object="${category}" method="post">
     <input type="hidden" th:field="*{id}">

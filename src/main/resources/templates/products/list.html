@@ -1,64 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <meta charset="UTF-8">
-    <title>Products List</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .actions a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #0066cc;
-        }
-        .actions a:hover {
-            text-decoration: underline;
-        }
-        .add-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .add-btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Товары</title>
+
 </head>
 <body>
 
+<header th:replace="~{header :: header}"></header>
+<h1>Товары</h1>
 <form th:action="@{/products/search}" method="get" class="mb-3">
     <div class="input-group">
         <input type="text" name="name" class="form-control" placeholder="Поиск по названию">
         <button type="submit" class="btn btn-primary">Найти</button>
-        <a th:href="@{/products}" class="btn btn-outline-secondary">Сбросить</a>
+        <a th:href="@{/products}" class="btn btn-primary">Сбросить</a>
     </div>
 </form>
 
-<h1>Products</h1>
-<a th:href="@{/products/new}" class="add-btn">Add New Product</a>
+
+<a th:href="@{/products/new}" class="add-btn">Добавить товар</a>
 <table>
     <thead>
     <tr>
         <th>ID</th>
         <th>Название мебели</th>
+        <th>Категория товара</th>
         <th>Описание</th>
         <th>Цена</th>
         <th>Действие</th>
@@ -68,6 +35,7 @@
     <tr th:each="product : ${products}">
         <td th:text="${product.id}"></td>
         <td th:text="${product.name}"></td>
+        <td th:text="${product.category != null ? product.category.name : 'Нет данных'}"></td>
         <td th:text="${product.description}"></td>
         <td th:text="${#numbers.formatDecimal(product.price, 1, 2) + '₽'}"></td>
         <td class="actions">

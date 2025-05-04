@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <meta charset="UTF-8">
     <title>Категории товаров</title>
-    <style>
-        .error { color: red; }
-        .btn-add { margin-bottom: 15px; display: inline-block; }
-    </style>
 </head>
 <body>
+
+<header th:replace="~{header :: header}"></header>
+
 <h1>Категории товаров</h1>
 
 <!-- Форма поиска -->
 <form th:action="@{/categories/search}" method="get">
     <input type="text" name="name" placeholder="Название категории" th:value="${param.name}">
-    <button type="submit">Поиск</button>
+    <button type="submit" class="btn btn-primary">Поиск</button>
     <a th:href="@{/categories}">Сбросить</a>
 </form>
-
-<div th:if="${error}" class="error" th:text="${error}"></div>
 
 <a th:href="@{/categories/new}" class="btn-add">Добавить категорию</a>
 

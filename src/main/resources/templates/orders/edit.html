@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <meta charset="UTF-8">
-    <title>Редактировать заказ</title>
+    <title>Редактирование заказа</title>
+
 </head>
 <body>
 <h1>Редактирование заказа</h1>
@@ -22,6 +24,10 @@
                     th:text="${product.name}">
             </option>
         </select>
+    </div>
+    <div>
+        <label>Количество товара:</label>
+        <input type="text" th:field="*{quantity}">
     </div>
     <div>
         <label>Телефон:</label>

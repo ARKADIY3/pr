@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<header th:fragment="header">
+    <nav>
+        <a th:href="@{/products}">Добавить товар</a>
+        <a th:href="@{/categories}">Добавить категорию</a>
+        <a th:href="@{/orders}">Заказы</a>
+    </nav>
+</header>
+</body>
+</html>

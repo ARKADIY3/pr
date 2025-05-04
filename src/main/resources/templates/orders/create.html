@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <meta charset="UTF-8">
     <title>Создать заказ</title>
+
 </head>
 <body>
-<h1>Новый заказ</h1>
+<h1>Создать заказ</h1>
 
 <form th:action="@{/orders/save}" th:object="${order}" method="post">
     <div>
@@ -22,6 +24,10 @@
                     th:text="${product.name}">
             </option>
         </select>
+    </div>
+    <div>
+        <label>Количество товара:</label>
+        <input type="text" th:field="*{quantity}">
     </div>
     <div>
         <label>Телефон:</label>

@@ -38,6 +38,10 @@
                onclick="return confirm('Удалить эту категорию?')">Удалить</a>
         </td>
     </tr>
+
+    <tr th:if="${categories == null or categories.empty}">
+        <td colspan="5">Нет данных о категориях</td>
+    </tr>
     </tbody>
 </table>
 </body>

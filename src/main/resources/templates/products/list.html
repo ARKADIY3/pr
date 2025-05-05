@@ -44,6 +44,10 @@
                onclick="return confirm('Вы уверены, что хотите удалить этот продукт?')">Удалить</a>
         </td>
     </tr>
+    <tr th:if="${products == null or products.empty}">
+        <td colspan="5">Нет товара</td>
+    </tr>
+
     </tbody>
 </table>
 </body>

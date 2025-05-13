@@ -1,146 +1,73 @@
-/* Общие стили для всех страниц */
+/* Дополнительные стили к Bootstrap */
+
+/* Общие стили */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-    color: #333;
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
 }
 
-header {
-    background-color: #343a40;
-    color: white;
-    padding: 15px 0;
-    margin-bottom: 20px;
-}
-
-header nav {
-    display: flex;
-    gap: 15px;
-    padding: 0 20px;
-}
-
-header a {
-    color: white;
-    text-decoration: none;
-}
-
-h1 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-/* Стили для таблиц */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: white;
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #343a40;
-    color: white;
-}
-
-tr:hover {
-    background-color: #f5f5f5;
-}
-
-/* Стили для форм */
-form {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
+/* Заголовок страницы */
+.navbar-brand {
     font-weight: bold;
 }
 
-input[type="text"],
-input[type="number"],
-textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-button, a {
-    display: inline-block;
-    padding: 8px 15px;
-    margin-right: 10px;
-    text-decoration: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button {
-    background-color: #28a745;
-    color: white;
+/* Карточки */
+.card {
     border: none;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
-button:hover {
+.card-header {
+    background-color: #007bff;
+    border-bottom: none;
+    font-weight: 500;
+}
+
+/* Таблицы */
+.table {
+    margin-bottom: 0;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Формы */
+.form-control:focus, .form-select:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn {
+    font-weight: 500;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-success:hover {
     background-color: #218838;
 }
 
-a {
-    background-color: #6c757d;
-    color: white;
+/* Анимация для интерактивных элементов */
+.btn, .nav-link {
+    transition: all 0.2s ease-in-out;
 }
 
-a:hover {
-    background-color: #5a6268;
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Специальные стили для кнопок */
-.actions a {
-    padding: 5px 10px;
-    margin-right: 5px;
-    background: none;
-    color: #007bff;
-}
-
-.actions a:hover {
-    text-decoration: underline;
-    background: none;
-}
-
-.add-btn {
-    background-color: #17a2b8;
-    margin-bottom: 20px;
-}
-
-.add-btn:hover {
-    background-color: #138496;
-}
-
-/* Стили для сообщений об ошибках */
-.error {
-    color: #dc3545;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .table-responsive {
+        border: none;
+    }
 }

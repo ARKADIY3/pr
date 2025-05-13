@@ -1,44 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/global.css}">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Редактирование заказа</title>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
-<h1>Редактирование заказа</h1>
+<div class="container py-4">
+    <header th:replace="~{header :: header}"></header>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="h4 mb-0">Редактирование заказа</h1>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/orders/save}" th:object="${order}" method="post" class="needs-validation" novalidate>
+                        <input type="hidden" th:field="*{id}">
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Имя клиента:</label>
+                            <input type="text" id="customerName" th:field="*{customerName}" class="form-control" required>
+                            <div class="invalid-feedback">Пожалуйста, введите имя клиента</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product" class="form-label">Товар:</label>
+                            <select id="product" th:field="*{product.id}" class="form-select" required>
+                                <option value="">-- Выберите товар --</option>
+                                <option th:each="product : ${allProducts}"
+                                        th:value="${product.id}"
+                                        th:text="${product.name}">
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Пожалуйста, выберите товар</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Количество товара:</label>
+                            <input type="number" id="quantity" th:field="*{quantity}" class="form-control" min="1" required>
+                            <div class="invalid-feedback">Пожалуйста, укажите количество</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerPhone" class="form-label">Телефон:</label>
+                            <input type="text" id="customerPhone" th:field="*{customerPhone}" class="form-control" required>
+                            <div class="invalid-feedback">Пожалуйста, введите телефон</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerAddress" class="form-label">Адрес:</label>
+                            <textarea id="customerAddress" th:field="*{customerAddress}" class="form-control" rows="3" required></textarea>
+                            <div class="invalid-feedback">Пожалуйста, введите адрес</div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/orders}" class="btn btn-secondary">Отмена</a>
+                            <button type="submit" class="btn btn-primary">Обновить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<form th:action="@{/orders/save}" th:object="${order}" method="post">
-    <input type="hidden" th:field="*{id}">
-    <div>
-        <label>Имя клиента:</label>
-        <input type="text" th:field="*{customerName}" required>
-    </div>
-    <div>
-        <label>Товар:</label>
-        <select th:field="*{product.id}" required>
-            <option value="">-- Выберите товар --</option>
-            <option th:each="product : ${allProducts}"
-                    th:value="${product.id}"
-                    th:text="${product.name}">
-            </option>
-        </select>
-    </div>
-    <div>
-        <label>Количество товара:</label>
-        <input type="text" th:field="*{quantity}">
-    </div>
-    <div>
-        <label>Телефон:</label>
-        <input type="text" th:field="*{customerPhone}">
-    </div>
-    <div>
-        <label>Адрес:</label>
-        <input type="text" th:field="*{customerAddress}">
-    </div>
-    <button type="submit">Обновить</button>
-    <a th:href="@{/orders}">Отмена</a>
-</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Валидация формы на стороне клиента
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    const forms = document.getElementsByClassName('needs-validation');
+    Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
 </body>
 </html>

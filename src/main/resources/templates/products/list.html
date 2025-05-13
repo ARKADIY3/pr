@@ -18,7 +18,7 @@
             <form th:action="@{/products/search}" method="get" class="mb-3">
                 <div class="input-group">
                     <input type="text" name="name" class="form-control" placeholder="Поиск по названию">
-                    <button type="submit" class="btn btn-primary">Найти</button>
+                    <button type="submit" class="btn btn-primary">Поиск</button>
                     <a th:href="@{/products}" class="btn btn-secondary">Сбросить</a>
                 </div>
             </form>
@@ -45,7 +45,7 @@
                 <tr th:each="product : ${products}">
                     <td th:text="${product.id}"></td>
                     <td th:text="${product.name}"></td>
-                    <td th:text="${product.category != null ? product.category.name : 'Нет данных'}"></td>
+                    <td th:text="${product.category != null && product.category.name != null ? product.category.name : 'Нет данных'}"></td>
                     <td th:text="${product.description}"></td>
                     <td th:text="${#numbers.formatDecimal(product.price, 1, 2) + '₽'}"></td>
                     <td>

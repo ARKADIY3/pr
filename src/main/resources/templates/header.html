@@ -1,30 +1,72 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Мебельный магазин</title>
+    <title>Comfort</title>
 </head>
 <body>
-<header th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <span class="navbar-brand">Мебельный магазин</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<header th:fragment="header" class="mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">Comfort</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/products}">Товары</a>
+                        <a class="nav-link" th:href="@{/}">
+                            <i class="bi bi-house-door"></i> Главная
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/categories}">Категории</a>
+                    <li class="nav-item dropdown" th:if="${isHomePage == true}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-tags"></i> Категории
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/}">Все категории</a></li>
+                            <li th:each="category : ${categories}">
+                                <a class="dropdown-item" 
+                                   th:href="@{/(categoryId=${category.id})}"
+                                   th:text="${category.name}">Категория</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/orders}">Заказы</a>
+                    <li class="nav-item admin-menu" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/products}">
+                            <i class="bi bi-box-seam"></i> Товары
+                        </a>
+                    </li>
+                    <li class="nav-item admin-menu" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/categories}">
+                            <i class="bi bi-tags"></i> Категории
+                        </a>
+                    </li>
+                    <li class="nav-item admin-menu" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/orders}">
+                            <i class="bi bi-cart-check"></i> Заказы
+                        </a>
                     </li>
                 </ul>
+                <div class="navbar-nav">
+                    <div sec:authorize="isAuthenticated()">
+                        <span class="navbar-text me-3">
+                            <i class="bi bi-person-circle"></i>
+                            <span sec:authentication="name">Username</span>
+                        </span>
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-light">Выйти</button>
+                        </form>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}" class="btn btn-outline-light me-2">Войти</a>
+                        <a th:href="@{/register}" class="btn btn-light">Регистрация</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

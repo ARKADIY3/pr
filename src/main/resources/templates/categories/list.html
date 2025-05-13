@@ -15,7 +15,6 @@
 
     <div class="row mb-4">
         <div class="col-md-8">
-            <!-- Форма поиска -->
             <form th:action="@{/categories/search}" method="get" class="mb-3">
                 <div class="input-group">
                     <input type="text" name="name" class="form-control" placeholder="Название категории" th:value="${param.name}">

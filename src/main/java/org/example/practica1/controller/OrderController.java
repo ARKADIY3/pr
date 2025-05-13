@@ -1,51 +1,66 @@
 package org.example.practica1.controller;
 
-import org.example.practica1.impl.ImplProductService;
 import org.example.practica1.model.Order;
+import org.example.practica1.model.Product;
 import org.example.practica1.service.OrderService;
+import org.example.practica1.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/orders")
+@PreAuthorize("hasRole('ADMIN')")
 public class OrderController {
     private final OrderService orderService;
-    private final ImplProductService implProductService;
+    private final ProductService productService;
 
     @Autowired
-    public OrderController(OrderService orderService, ImplProductService implProductService) {
+    public OrderController(OrderService orderService, ProductService productService) {
         this.orderService = orderService;
-        this.implProductService = implProductService;
+        this.productService = productService;
     }
 
     @GetMapping
     public String listOrders(Model model) {
-        model.addAttribute("orders", orderService.getAllOrders());
+        List<Order> orders = orderService.getAllOrders();
+        model.addAttribute("orders", orders);
         return "orders/list";
     }
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("order", new Order());
-        model.addAttribute("allProducts", implProductService.getAllProducts());
+        Order order = new Order();
+        // Устанавливаем текущую дату для нового заказа
+        order.setOrderDate(new Date());
+        
+        model.addAttribute("order", order);
+        model.addAttribute("products", productService.getAllProducts());
         return "orders/create";
     }
 
     @PostMapping("/save")
-    public String saveOrder(@ModelAttribute Order order) {
-        order.setOrderDate(new Date());
-        orderService.saveOrder(order);
+    public String createOrder(@ModelAttribute Order order) {
+        orderService.createOrder(order);
         return "redirect:/orders";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Order order = orderService.getOrderById(id);
+        if (order == null) {
+            return "redirect:/orders";
+        }
         model.addAttribute("order", order);
-        model.addAttribute("allProducts", implProductService.getAllProducts());
+        model.addAttribute("products", productService.getAllProducts());
         return "orders/edit";
     }
 
@@ -60,9 +75,19 @@ public class OrderController {
             @RequestParam(required = false) String customerName,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
-            Model model) {
-        model.addAttribute("orders",
-                orderService.searchOrders(customerName, startDate, endDate));
+            Model model) throws ParseException {
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedStartDate = startDate != null && !startDate.isEmpty() ? dateFormat.parse(startDate) : null;
+        Date parsedEndDate = endDate != null && !endDate.isEmpty() ? dateFormat.parse(endDate) : null;
+        
+        List<Order> orders = orderService.searchOrders(
+                customerName != null ? customerName : "",
+                parsedStartDate,
+                parsedEndDate
+        );
+        
+        model.addAttribute("orders", orders);
         return "orders/list";
     }
 }

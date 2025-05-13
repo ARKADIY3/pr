@@ -3,12 +3,16 @@ package org.example.practica1.controller;
 import org.example.practica1.model.Category;
 import org.example.practica1.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/categories")
+@PreAuthorize("hasRole('ADMIN')")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -19,7 +23,8 @@ public class CategoryController {
 
     @GetMapping
     public String listCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
         return "categories/list";
     }
 
@@ -37,7 +42,11 @@ public class CategoryController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("category", categoryService.getCategoryById(id));
+        Category category = categoryService.getCategoryById(id);
+        if (category == null) {
+            return "redirect:/categories";
+        }
+        model.addAttribute("category", category);
         return "categories/edit";
     }
 
@@ -49,7 +58,7 @@ public class CategoryController {
 
     @GetMapping("/search")
     public String searchCategories(@RequestParam String name, Model model) {
-        model.addAttribute("categories", categoryService.searchCategories(name));
+        model.addAttribute("categories", categoryService.searchCategoriesByName(name));
         return "categories/list";
     }
 }

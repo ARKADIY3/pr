@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h1 class="h4 mb-0">Регистрация нового пользователя</h1>
+                </div>
+                <div class="card-body">
+                    <div th:if="${error}" class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i> <span th:text="${error}"></span>
+                    </div>
+                    
+                    <form th:action="@{/register-process}" th:object="${user}" method="post" class="needs-validation">
+                        <div class="mb-3">
+                            <label for="name" class="form-label"><i class="bi bi-person"></i> Имя</label>
+                            <input type="text" id="name" th:field="*{name}" class="form-control" required 
+                                   minlength="2" maxlength="50">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                Пожалуйста, укажите имя.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label"><i class="bi bi-envelope"></i> Email</label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control" required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                Пожалуйста, укажите корректный email.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="password" class="form-label"><i class="bi bi-key"></i> Пароль</label>
+                            <input type="password" id="password" th:field="*{password}" class="form-control" 
+                                   required minlength="6">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                                Пароль должен быть не менее 6 символов.
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-person-plus"></i> Зарегистрироваться
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <hr>
+                    <div class="text-center">
+                        <p>Уже есть аккаунт? <a th:href="@{/login}" class="text-decoration-none">Войти</a></p>
+                        <a th:href="@{/}" class="text-decoration-none">Вернуться на главную</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

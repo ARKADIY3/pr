@@ -8,7 +8,7 @@
 </head>
 <body>
 <header th:fragment="header" class="mb-4">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/}">Comfort</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -22,7 +22,7 @@
                             <i class="bi bi-house-door"></i> Главная
                         </a>
                     </li>
-                    <li class="nav-item dropdown" th:if="${isHomePage == true}">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-tags"></i> Категории
@@ -36,17 +36,17 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item admin-menu" sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link" th:href="@{/products}">
                             <i class="bi bi-box-seam"></i> Товары
                         </a>
                     </li>
-                    <li class="nav-item admin-menu" sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link" th:href="@{/categories}">
                             <i class="bi bi-tags"></i> Категории
                         </a>
                     </li>
-                    <li class="nav-item admin-menu" sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                         <a class="nav-link" th:href="@{/orders}">
                             <i class="bi bi-cart-check"></i> Заказы
                         </a>

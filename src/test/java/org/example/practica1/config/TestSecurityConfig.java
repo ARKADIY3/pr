@@ -21,7 +21,7 @@ public class TestSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/home", "/register", "/register-process", "/product-details", "/?**", "/product-details?**", "/login").permitAll()
+                .requestMatchers("/", "/home", "/register", "/register-process", "/product-details", "/?**", "/product-details?**", "/login", "/guide").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

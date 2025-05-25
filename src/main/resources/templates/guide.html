@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Руководство пользователя - Comfort</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-4">
+        <header th:replace="~{header :: header}"></header>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title h2 mb-4">Руководство пользователя</h1>
+                        
+                        <div class="mb-5">
+                            <h2 class="h4 text-primary">Общая информация</h2>
+                            <p>Добро пожаловать в магазин мебели Comfort! Наш сайт предоставляет удобный интерфейс для просмотра и покупки мебели различных категорий.</p>
+                        </div>
+
+                        <div class="mb-5">
+                            <h2 class="h4 text-primary">Для всех пользователей</h2>
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <h3 class="h5 mb-2">Просмотр товаров</h3>
+                                    <ul>
+                                        <li>На главной странице отображаются все доступные товары</li>
+                                        <li>Используйте меню "Категории" для фильтрации товаров по категориям</li>
+                                        <li>Нажмите на карточку товара для просмотра подробной информации</li>
+                                    </ul>
+                                </div>
+                                <div class="list-group-item">
+                                    <h3 class="h5 mb-2">Регистрация и вход</h3>
+                                    <ul>
+                                        <li>Для регистрации нажмите кнопку "Регистрация" в верхнем меню</li>
+                                        <li>Заполните форму регистрации, указав email и пароль</li>
+                                        <li>После регистрации используйте кнопку "Войти" для авторизации</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5" sec:authorize="hasRole('ADMIN')">
+                            <h2 class="h4 text-primary">Для администраторов</h2>
+                            <div class="list-group">
+                                <div class="list-group-item">
+                                    <h3 class="h5 mb-2">Управление товарами</h3>
+                                    <ul>
+                                        <li>Перейдите в раздел "Товары" для управления ассортиментом</li>
+                                        <li>Добавляйте новые товары через форму "Добавить товар"</li>
+                                        <li>Редактируйте существующие товары, нажав кнопку "Редактировать"</li>
+                                        <li>Удаляйте товары с помощью кнопки "Удалить"</li>
+                                    </ul>
+                                </div>
+                                <div class="list-group-item">
+                                    <h3 class="h5 mb-2">Управление категориями</h3>
+                                    <ul>
+                                        <li>В разделе "Категории" создавайте и управляйте категориями товаров</li>
+                                        <li>Добавляйте новые категории через форму "Добавить категорию"</li>
+                                        <li>Редактируйте названия категорий при необходимости</li>
+                                    </ul>
+                                </div>
+                                <div class="list-group-item">
+                                    <h3 class="h5 mb-2">Управление заказами</h3>
+                                    <ul>
+                                        <li>Просматривайте все заказы в разделе "Заказы"</li>
+                                        <li>Создавайте новые заказы через форму "Создать заказ"</li>
+                                        <li>Используйте поиск для фильтрации заказов по дате и имени клиента</li>
+                                        <li>Отслеживайте статус заказов и управляйте ими</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h2 class="h4 text-primary">Поддержка</h2>
+                            <p>Если у вас возникли вопросы или проблемы при использовании сайта, пожалуйста, свяжитесь с нашей службой поддержки:</p>
+                            <ul>
+                                <li>Email: support@comfort.com</li>
+                                <li>Телефон: +7 (XXX) XXX-XX-XX</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

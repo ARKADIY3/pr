@@ -122,4 +122,17 @@ public class HomeControllerTest {
         verify(productService).getProductById(productId);
         verify(categoryService).getAllCategories();
     }
+
+    @Test
+    void userGuideShouldDisplayGuidePageWithCategories() throws Exception {
+        when(categoryService.getAllCategories()).thenReturn(categories);
+
+        mockMvc.perform(get("/guide"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("guide"))
+                .andExpect(model().attribute("categories", categories))
+                .andExpect(model().attribute("isHomePage", true));
+
+        verify(categoryService).getAllCategories();
+    }
 } 

@@ -65,4 +65,14 @@ public class HomeController {
         
         return "product-details";
     }
+
+    @GetMapping("/guide")
+    public String userGuide(Model model) {
+        // Добавляем категории для меню
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        model.addAttribute("isHomePage", true);
+        
+        return "guide";
+    }
 } 

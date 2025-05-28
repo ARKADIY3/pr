@@ -18,38 +18,53 @@
                     <h1 class="h4 mb-0">Создать заказ</h1>
                 </div>
                 <div class="card-body">
+                    <!-- Сообщения об ошибках -->
+                    <div th:if="${param.error}" class="alert alert-danger mb-3">
+                        <div th:switch="${param.error[0]}">
+                            <div th:case="'product_not_found'">Выбранный товар не найден.</div>
+                            <div th:case="'product_required'">Пожалуйста, выберите товар.</div>
+                            <div th:case="'save_failed'">Произошла ошибка при сохранении заказа. Пожалуйста, попробуйте снова.</div>
+                            <div th:case="*">Произошла неизвестная ошибка. Пожалуйста, попробуйте снова.</div>
+                        </div>
+                    </div>
+                    
                     <form th:action="@{/orders/save}" th:object="${order}" method="post" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label for="customerName" class="form-label">Имя клиента:</label>
                             <input type="text" id="customerName" th:field="*{customerName}" class="form-control" required>
                             <div class="invalid-feedback">Пожалуйста, введите имя клиента</div>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="product" class="form-label">Товар:</label>
                             <select id="product" th:field="*{product.id}" class="form-select" required>
                                 <option value="">-- Выберите товар --</option>
-                                <option th:each="product : ${allProducts}"
-                                        th:value="${product.id}"
-                                        th:text="${product.name}">
+                                <option th:each="prod : ${allProducts}"
+                                        th:value="${prod.id}"
+                                        th:text="${prod.name + ' - ' + prod.price + '₽'}">
                                 </option>
                             </select>
                             <div class="invalid-feedback">Пожалуйста, выберите товар</div>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="quantity" class="form-label">Количество товара:</label>
                             <input type="number" id="quantity" th:field="*{quantity}" class="form-control" min="1" required>
                             <div class="invalid-feedback">Пожалуйста, укажите количество</div>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="customerPhone" class="form-label">Телефон:</label>
                             <input type="text" id="customerPhone" th:field="*{customerPhone}" class="form-control" required>
                             <div class="invalid-feedback">Пожалуйста, введите телефон</div>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="customerAddress" class="form-label">Адрес:</label>
                             <textarea id="customerAddress" th:field="*{customerAddress}" class="form-control" rows="3" required></textarea>
                             <div class="invalid-feedback">Пожалуйста, введите адрес</div>
                         </div>
+                        
                         <div class="d-flex justify-content-between">
                             <a th:href="@{/orders}" class="btn btn-secondary">Отмена</a>
                             <button type="submit" class="btn btn-success">Сохранить</button>

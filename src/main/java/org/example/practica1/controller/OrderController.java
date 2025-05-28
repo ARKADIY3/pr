@@ -42,15 +42,40 @@ public class OrderController {
         // Устанавливаем текущую дату для нового заказа
         order.setOrderDate(new Date());
         
+        List<Product> products = productService.getAllProducts();
+        System.out.println("Количество загруженных товаров: " + products.size()); // Отладочное сообщение
+        
         model.addAttribute("order", order);
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("allProducts", products);
         return "orders/create";
     }
 
     @PostMapping("/save")
     public String createOrder(@ModelAttribute Order order) {
-        orderService.createOrder(order);
-        return "redirect:/orders";
+        try {
+            if (order.getProduct() != null && order.getProduct().getId() != null) {
+                Product product = productService.getProductById(order.getProduct().getId());
+                if (product == null) {
+                    // Если товар не найден, перенаправляем обратно на форму
+                    return "redirect:/orders/new?error=product_not_found";
+                }
+                order.setProduct(product);
+            } else {
+                // Если товар не выбран, перенаправляем обратно на форму
+                return "redirect:/orders/new?error=product_required";
+            }
+            
+            // Устанавливаем текущую дату для заказа, если она не установлена
+            if (order.getOrderDate() == null) {
+                order.setOrderDate(new Date());
+            }
+            
+            orderService.createOrder(order);
+            return "redirect:/orders";
+        } catch (Exception e) {
+            // Логируем ошибку и перенаправляем на форму с сообщением об ошибке
+            return "redirect:/orders/new?error=save_failed";
+        }
     }
 
     @GetMapping("/edit/{id}")
@@ -60,7 +85,7 @@ public class OrderController {
             return "redirect:/orders";
         }
         model.addAttribute("order", order);
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("allProducts", productService.getAllProducts());
         return "orders/edit";
     }
 
